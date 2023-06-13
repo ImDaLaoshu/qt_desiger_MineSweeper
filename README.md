@@ -1,2 +1,3 @@
 # qt_desiger_MineSweeper
-qt,c++
+qt,c++，qtCreator
+
