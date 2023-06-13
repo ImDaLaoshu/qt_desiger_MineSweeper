@@ -13,21 +13,8 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="restart">
-    <property name="geometry">
-     <rect>
-      <x>375</x>
-      <y>10</y>
-      <width>50</width>
-      <height>50</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -52,23 +39,24 @@
     <addaction name="primary"/>
     <addaction name="intermediate"/>
    </widget>
-   <widget class="QMenu" name="exit">
+   <widget class="QMenu" name="game">
     <property name="geometry">
      <rect>
       <x>1409</x>
       <y>125</y>
       <width>137</width>
-      <height>54</height>
+      <height>102</height>
      </rect>
     </property>
     <property name="title">
-     <string>退出游戏</string>
+     <string>游戏</string>
     </property>
+    <addaction name="restart"/>
+    <addaction name="exit"/>
    </widget>
    <addaction name="level"/>
-   <addaction name="exit"/>
+   <addaction name="game"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="primary">
    <property name="text">
     <string>初级</string>
@@ -77,6 +65,16 @@
   <action name="intermediate">
    <property name="text">
     <string>中级</string>
+   </property>
+  </action>
+  <action name="restart">
+   <property name="text">
+    <string>重新开始</string>
+   </property>
+  </action>
+  <action name="exit">
+   <property name="text">
+    <string>退出游戏</string>
    </property>
   </action>
  </widget>
