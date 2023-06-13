@@ -45,7 +45,7 @@
      <rect>
       <x>25</x>
       <y>0</y>
-      <width>400</width>
+      <width>500</width>
       <height>150</height>
      </rect>
     </property>
@@ -61,8 +61,18 @@
        <height>100</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot; style=&quot; font-size:18pt; font-weight:600;&quot;&gt;00&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>00</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
@@ -87,8 +97,18 @@
        <height>100</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot; style=&quot; font-size:18pt; font-weight:600;&quot;&gt;00&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>00</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="label_4">
@@ -113,8 +133,44 @@
        <height>100</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot; style=&quot; font-size:18pt; font-weight:600;&quot;&gt;00&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>00</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtton_start">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>50</y>
+       <width>50</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>开始</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_reset">
+     <property name="geometry">
+      <rect>
+       <x>440</x>
+       <y>50</y>
+       <width>50</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>重置</string>
      </property>
     </widget>
    </widget>
