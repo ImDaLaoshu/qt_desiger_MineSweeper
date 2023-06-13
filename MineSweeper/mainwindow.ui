@@ -7,15 +7,78 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="restart">
+    <property name="geometry">
+     <rect>
+      <x>375</x>
+      <y>10</y>
+      <width>50</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="level">
+    <property name="geometry">
+     <rect>
+      <x>1333</x>
+      <y>125</y>
+      <width>137</width>
+      <height>102</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>难度选择</string>
+    </property>
+    <addaction name="primary"/>
+    <addaction name="intermediate"/>
+   </widget>
+   <widget class="QMenu" name="exit">
+    <property name="geometry">
+     <rect>
+      <x>1409</x>
+      <y>125</y>
+      <width>137</width>
+      <height>54</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>退出游戏</string>
+    </property>
+   </widget>
+   <addaction name="level"/>
+   <addaction name="exit"/>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="primary">
+   <property name="text">
+    <string>初级</string>
+   </property>
+  </action>
+  <action name="intermediate">
+   <property name="text">
+    <string>中级</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
