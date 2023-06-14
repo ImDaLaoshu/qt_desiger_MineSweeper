@@ -1,22 +1,30 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-//    QFont ft;
-//    ft.setPointSize(18);
-//    ft.setBold(true);
-//    ui->label_h->setFont(ft);
-//    ui->label_m->setFont(ft);
-//    ui->label_s->setFont(ft);
-//    ui->label_h->setAlignment(Qt::AlignCenter);
-//    ui->label_m->setAlignment(Qt::AlignCenter);
-//    ui->label_s->setAlignment(Qt::AlignCenter);
     updataCount();
+
+    //网格初始化
+    for(int i=0;i<9;i++)
+        for(int j=0;j<9;j++){
+            grids1[i][j]=new QPushButton("0");
+            gridLayout1->addWidget(grids1[i][j],i,j,1,1);
+        }
+    for(int i=0;i<16;i++)
+        for(int j=0;j<16;j++){
+            grids2[i][j]=new QPushButton("0");
+            gridLayout2->addWidget(grids2[i][j],i,j,1,1);
+        }
+
+     ui->MineSweeeperWindow1->setLayout(gridLayout1);
+     ui->MineSweeeperWindow2->setLayout(gridLayout2);
+     ui->MineSweeeperWindow1->hide();
+     ui->MineSweeeperWindow2->hide();
+
 }
 
 MainWindow::~MainWindow()
@@ -124,14 +132,7 @@ void MainWindow::resetCount(){
 
 
 
-
-
-
-
-
-
-
-
+//开始(暂停)，重置计数器
 void MainWindow::on_pushButtton_start_clicked()
 {
     if(workingCount ==false){
@@ -151,4 +152,46 @@ void MainWindow::on_pushButton_reset_clicked()
 {
     resetCount();
     ui->pushButtton_start->setText("开始");
+}
+
+
+//绘制地图,无炸弹:0,有炸弹:1
+void MainWindow::setMap(){
+
+    if(this->level == 1){
+    ui->MineSweeeperWindow1->show();
+    ui->MineSweeeperWindow2->hide();
+    }
+    else{
+
+        ui->MineSweeeperWindow2->show();
+        ui->MineSweeeperWindow1->hide();
+    }
+
+
+//    //使用数组保存地图信息
+//    int map[this->area][this->area];
+//    //初始化地图，无炸弹
+//    for(int i=0;i<this->area;i++)
+//        for(int j=0;j<this->area;j++)
+//            map[i][j] = 0;
+
+
+
+
+
+}
+
+
+void MainWindow::on_primary_triggered()
+{
+    this->setLevel(1);
+    this->setMap();
+
+}
+
+void MainWindow::on_intermediate_triggered()
+{
+    this->setLevel(2);
+    this->setMap();
 }

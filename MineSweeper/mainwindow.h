@@ -4,7 +4,11 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QGridLayout>
 #include <QTimer>
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,12 +28,7 @@ public:
     void closeEvent(QCloseEvent *event);
 
     QTimer *timer_up = new QTimer(this);
-    //计时器时间
-    int count_h =0;
-    int count_m =0;
-    int count_s =0;
-    //计数器工作状态
-     bool workingCount = false;
+
     //计时器开始函数
     void startCount();
     //计时器暂停函数
@@ -41,18 +40,43 @@ public:
     //时间计算
     void calculateCount();
 
+    //难度设置,初级难度为1，中级难度为2
+    void setLevel(int L){
+    this->level=L;
+    }
 
+    //绘制地图
+    void setMap();
 
 private slots:
     void on_exit_triggered();
-
 
 
     void on_pushButtton_start_clicked();
 
     void on_pushButton_reset_clicked();
 
+    void on_primary_triggered();
+
+    void on_intermediate_triggered();
+
 private:
     Ui::MainWindow *ui;
+    //计时器时间
+    int count_h =0;
+    int count_m =0;
+    int count_s =0;
+
+    //计数器工作状态
+     bool workingCount = false;
+
+     //难度,默认为初级难度1
+     int level = 1;
+
+     //网格创建
+     QPushButton *grids1[9][9];
+     QPushButton *grids2[16][16];
+     QGridLayout *gridLayout1=new QGridLayout;
+     QGridLayout *gridLayout2=new QGridLayout;
 };
 #endif // MAINWINDOW_H
