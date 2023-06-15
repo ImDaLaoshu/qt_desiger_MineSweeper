@@ -54,6 +54,9 @@ public:
     //绘制地图
     void setMap();
 
+    //判断方格周边八个方格是否无雷
+    bool checkGridsAround(int map[16][16],int r,int c,int n);
+
 private slots:
     void on_exit_triggered();
 

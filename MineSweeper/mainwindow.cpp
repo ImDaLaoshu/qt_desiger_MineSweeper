@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -274,6 +273,37 @@ void MainWindow::sweeperGrids(){
 
         }
 
+        int n;
+        if(this->level == 1)
+            n=9;
+        else
+            n=16;
+
+        if(this->map[row][column] == 0&&checkGridsAround(this->map,row,column,n)){
+
+            if(this->level == 1){
+                for(int i=row-1;i<=row+1;i++)
+                    for(int j=column-1;j<=column+1;j++){
+
+                        if(i>=0&&i<n&&j>=0&&j<n){
+
+                            this->grids1[i][j]->setText("无");
+                        }
+                    }
+            }
+            else{
+                for(int i=row-1;i<=row+1;i++)
+                    for(int j=column-1;j<=column+1;j++){
+
+                        if(i>=0&&i<n&&j>=0&&j<n){
+
+                            this->grids2[i][j]->setText("无");
+                        }
+                    }
+
+            }
+
+        }
 
 
         std::cout<<row<<","<<column<<std::endl;
