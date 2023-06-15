@@ -10,18 +10,18 @@ MainWindow::MainWindow(QWidget *parent)
     //网格初始化
     for(int i=0;i<9;i++)
         for(int j=0;j<9;j++){
-            grids1[i][j]=new QPushButton("0");
-            QString result=QString::number(i)+","+QString::number(j);
-            grids1[i][j]->setText(result);
+            grids1[i][j]=new QPushButton("");
+//            QString result=QString::number(i)+","+QString::number(j);
+//            grids1[i][j]->setText(result);
             //绑定槽函数
             connect(grids1[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             gridLayout1->addWidget(grids1[i][j],i,j,1,1);
         }
     for(int i=0;i<16;i++)
         for(int j=0;j<16;j++){
-            grids2[i][j]=new QPushButton("0");
-            QString result=QString::number(i)+","+QString::number(j);
-            grids2[i][j]->setText(result);
+            grids2[i][j]=new QPushButton("");
+//            QString result=QString::number(i)+","+QString::number(j);
+//            grids2[i][j]->setText(result);
             //绑定槽函数
             connect(grids2[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             gridLayout2->addWidget(grids2[i][j],i,j,1,1);
@@ -240,33 +240,43 @@ void MainWindow::on_intermediate_triggered()
 void MainWindow::sweeperGrids(){
 
     QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
-    //分割字符串，获取网格坐标
-    QString str = senderButton->text();
-    std::string stdStr = str.toStdString();
+    int row, column, rowSpan, columnSpan;
+    //获取网格坐标
+    if(this->level == 1)
+        gridLayout1->getItemPosition(gridLayout1->indexOf(senderButton),&row, &column, &rowSpan, &columnSpan);
+    else
+        gridLayout2->getItemPosition(gridLayout2->indexOf(senderButton),&row, &column, &rowSpan, &columnSpan);
 
-    std::stringstream ss(stdStr);
-    std::vector<int> numbers;
+//    //分割字符串，获取网格坐标
+//    QString str = senderButton->text();
+//    std::string stdStr = str.toStdString();
 
-    std::string segment;
-    while (std::getline(ss, segment, ',')) {
-        int number;
-        std::istringstream(segment) >> number;
-        numbers.push_back(number);
-    }
+//    std::stringstream ss(stdStr);
+//    std::vector<int> numbers;
 
-        int r = numbers[0];
-        int c = numbers[1];
+//    std::string segment;
+//    while (std::getline(ss, segment, ',')) {
+//        int number;
+//        std::istringstream(segment) >> number;
+//        numbers.push_back(number);
+//    }
 
-        if(this->map[r][c] == 1){
+//        int r = numbers[0];
+//        int c = numbers[1];
+
+        if(this->map[row][column] == 1){
              QIcon icon(":/image/bomb.png");
             senderButton->setIcon(icon);
             QMessageBox::StandardButton sbutton;
             sbutton = QMessageBox::question(this,"西奈","小心手雷  w(ﾟДﾟ)w",
                                            QMessageBox::Yes | QMessageBox::No);
+            senderButton->setEnabled(false);
 
         }
 
-        std::cout<<r<<","<<c<<std::endl;
+
+
+        std::cout<<row<<","<<column<<std::endl;
 
 
 }
