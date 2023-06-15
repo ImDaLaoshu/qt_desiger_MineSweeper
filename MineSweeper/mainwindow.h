@@ -6,9 +6,15 @@
 #include <QCloseEvent>
 #include <QGridLayout>
 #include <QTimer>
+#include <QSignalMapper>
+#include <QString>
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <vector>
+#include <random>
+#include <algorithm>
+#include<string>
+#include <sstream>
+#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -60,6 +66,8 @@ private slots:
 
     void on_intermediate_triggered();
 
+    void sweeperGrids();
+
 private:
     Ui::MainWindow *ui;
     //计时器时间
@@ -78,5 +86,8 @@ private:
      QPushButton *grids2[16][16];
      QGridLayout *gridLayout1=new QGridLayout;
      QGridLayout *gridLayout2=new QGridLayout;
+
+     //使用数组保存地图信息
+     int map[16][16];
 };
 #endif // MAINWINDOW_H

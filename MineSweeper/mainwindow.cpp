@@ -7,16 +7,23 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     updataCount();
-
     //网格初始化
     for(int i=0;i<9;i++)
         for(int j=0;j<9;j++){
             grids1[i][j]=new QPushButton("0");
+            QString result=QString::number(i)+","+QString::number(j);
+            grids1[i][j]->setText(result);
+            //绑定槽函数
+            connect(grids1[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             gridLayout1->addWidget(grids1[i][j],i,j,1,1);
         }
     for(int i=0;i<16;i++)
         for(int j=0;j<16;j++){
             grids2[i][j]=new QPushButton("0");
+            QString result=QString::number(i)+","+QString::number(j);
+            grids2[i][j]->setText(result);
+            //绑定槽函数
+            connect(grids2[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             gridLayout2->addWidget(grids2[i][j],i,j,1,1);
         }
 
@@ -158,26 +165,59 @@ void MainWindow::on_pushButton_reset_clicked()
 //绘制地图,无炸弹:0,有炸弹:1
 void MainWindow::setMap(){
 
+    int numberOfMines,area;
+    srand(time(0));
     if(this->level == 1){
     ui->MineSweeeperWindow1->show();
     ui->MineSweeeperWindow2->hide();
+    numberOfMines = 10;
+    area = 9;
     }
     else{
-
         ui->MineSweeeperWindow2->show();
         ui->MineSweeeperWindow1->hide();
+        numberOfMines = 40;
+        area = 16;
     }
 
 
-//    //使用数组保存地图信息
-//    int map[this->area][this->area];
-//    //初始化地图，无炸弹
-//    for(int i=0;i<this->area;i++)
-//        for(int j=0;j<this->area;j++)
-//            map[i][j] = 0;
+
+    //初始化地图，无炸弹
+    for(int i=0;i<area;i++)
+        for(int j=0;j<area;j++)
+            map[i][j] = 0;
 
 
+    //随机生成炸弹
+    int minNumber = 0;    // 随机数的最小值
+    int maxNumber = (area*area)-1;  // 随机数的最大值
+    int count = numberOfMines;       // 需要生成的随机数数量
 
+    std::vector<int> numbers;
+    for (int i = minNumber; i <= maxNumber; ++i) {
+        numbers.push_back(i);
+    }
+
+    std::random_device rd;
+    std::mt19937 generator(rd());
+
+    std::shuffle(numbers.begin(), numbers.end(), generator);
+
+    for (int i = 0; i < count; ++i) {
+        map[numbers[i]/area][numbers[i]%area-1]=1;
+//        if(count == 10){
+//            int row = numbers[i]/area;
+//            int colum = numbers[i]%area-1;
+
+//            grids1[row][colum]->setText("1");
+//        }
+//        else{
+//            int row = numbers[i]/area;
+//            int colum = numbers[i]%area-1;
+
+//            grids2[row][colum]->setText("1");
+//        }
+    }
 
 
 }
@@ -195,3 +235,40 @@ void MainWindow::on_intermediate_triggered()
     this->setLevel(2);
     this->setMap();
 }
+
+
+void MainWindow::sweeperGrids(){
+
+    QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
+    //分割字符串，获取网格坐标
+    QString str = senderButton->text();
+    std::string stdStr = str.toStdString();
+
+    std::stringstream ss(stdStr);
+    std::vector<int> numbers;
+
+    std::string segment;
+    while (std::getline(ss, segment, ',')) {
+        int number;
+        std::istringstream(segment) >> number;
+        numbers.push_back(number);
+    }
+
+        int r = numbers[0];
+        int c = numbers[1];
+
+        if(this->map[r][c] == 1){
+             QIcon icon(":/image/bomb.png");
+            senderButton->setIcon(icon);
+            QMessageBox::StandardButton sbutton;
+            sbutton = QMessageBox::question(this,"西奈","小心手雷  w(ﾟДﾟ)w",
+                                           QMessageBox::Yes | QMessageBox::No);
+
+        }
+
+        std::cout<<r<<","<<c<<std::endl;
+
+
+}
+
+
