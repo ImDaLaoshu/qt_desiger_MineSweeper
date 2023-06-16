@@ -15,6 +15,7 @@
 #include<string>
 #include <sstream>
 #include <vector>
+#include <queue>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -56,6 +57,8 @@ public:
 
     //判断方格周边八个方格是否无雷
     bool checkGridsAround(int map[16][16],int r,int c,int n);
+    //获得方格周边八个方格地雷数量
+    int getAroundMine(int map[16][16],int r,int c,int n);
 
 private slots:
     void on_exit_triggered();

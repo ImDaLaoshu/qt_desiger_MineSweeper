@@ -287,7 +287,8 @@ void MainWindow::sweeperGrids(){
 
                         if(i>=0&&i<n&&j>=0&&j<n){
 
-                            this->grids1[i][j]->setText("无");
+                            this->grids1[i][j]->setText(QString::number(this->getAroundMine(this->map,i,j,n)));
+                            this->grids1[i][j]->setEnabled(false);
                         }
                     }
             }
@@ -297,12 +298,17 @@ void MainWindow::sweeperGrids(){
 
                         if(i>=0&&i<n&&j>=0&&j<n){
 
-                            this->grids2[i][j]->setText("无");
+                            this->grids2[i][j]->setText(QString::number(this->getAroundMine(this->map,i,j,n)));
+                            this->grids2[i][j]->setEnabled(false);
                         }
                     }
-
             }
 
+        }
+        else{
+
+               senderButton->setText(QString::number(this->getAroundMine(this->map,row,column,n)));
+               senderButton->setEnabled(false);
         }
 
 
