@@ -16,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent)
 //            grids1[i][j]->setText(result);
             //绑定槽函数
             connect(grids1[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
+            grids1[i][j]->setContextMenuPolicy(Qt::CustomContextMenu);//启用自定义上下文菜单
+            connect(grids1[i][j], &QPushButton::customContextMenuRequested, this, &MainWindow::markMine);//右键
+
             gridLayout1->addWidget(grids1[i][j],i,j,1,1);
 
         }
@@ -26,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent)
 //            grids2[i][j]->setText(result);
             //绑定槽函数
             connect(grids2[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
+            grids2[i][j]->setContextMenuPolicy(Qt::CustomContextMenu);//启用自定义上下文菜单
+            connect(grids2[i][j], &QPushButton::customContextMenuRequested, this, &MainWindow::markMine);//右键
+
             gridLayout2->addWidget(grids2[i][j],i,j,1,1);
         }
      ui->MineSweeeperWindow1->setLayout(gridLayout1);
@@ -431,3 +437,18 @@ void MainWindow::on_restart_triggered()
 {
     this->setMap();
 }
+
+//右键标记地雷
+void MainWindow::markMine(){
+
+
+        QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
+        if(senderButton->text() == "😎")
+            senderButton->setText("");
+        else
+            senderButton->setText("😎");
+
+}
+
+
+

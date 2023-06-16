@@ -60,6 +60,7 @@ public:
     //获得方格周边八个方格地雷数量
     int getAroundMine(int map[16][16],int r,int c,int n);
 
+
 private slots:
     void on_exit_triggered();
 
@@ -75,6 +76,9 @@ private slots:
     void sweeperGrids();
 
     void on_restart_triggered();
+
+    //鼠标右键标记地雷
+    void markMine();
 
 private:
     Ui::MainWindow *ui;
