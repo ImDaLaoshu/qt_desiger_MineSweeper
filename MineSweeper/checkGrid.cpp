@@ -36,6 +36,7 @@ bool MainWindow::checkGridsAround(int map[16][16],int r,int c,int n){
             return false;
 
 
+
     return true;
 
 }

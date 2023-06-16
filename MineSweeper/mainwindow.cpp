@@ -156,7 +156,6 @@ void MainWindow::resetCount(){
 void MainWindow::setMap(){
 
     int numberOfMines,area;
-    srand(time(0));
     if(this->level == 1){
     ui->MineSweeeperWindow1->show();
     ui->MineSweeeperWindow2->hide();
