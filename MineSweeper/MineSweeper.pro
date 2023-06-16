@@ -18,10 +18,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     checkGrid.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    positionofgrid.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    positionofgrid.h
 
 FORMS += \
     mainwindow.ui

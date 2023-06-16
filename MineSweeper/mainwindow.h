@@ -93,7 +93,7 @@ private:
      QGridLayout *gridLayout1=new QGridLayout;
      QGridLayout *gridLayout2=new QGridLayout;
 
-     //使用数组保存地图信息
+     //使用数组保存地图信息,0:无雷，1:有雷,2:已被掀开
      int map[16][16];
 };
 #endif // MAINWINDOW_H

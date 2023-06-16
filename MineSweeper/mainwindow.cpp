@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "positionofgrid.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -279,29 +281,48 @@ void MainWindow::sweeperGrids(){
         else
             n=16;
 
+
+
         if(this->map[row][column] == 0&&checkGridsAround(this->map,row,column,n)){
 
+            std::queue<positionOfGrid> qGrid;
+            qGrid.push(positionOfGrid(row,column));
+
+            while(!qGrid.empty()){
+
+            positionOfGrid position = qGrid.front();
             if(this->level == 1){
-                for(int i=row-1;i<=row+1;i++)
-                    for(int j=column-1;j<=column+1;j++){
+                for(int i=position.row-1;i<=position.row+1;i++)
+                    for(int j=position.column-1;j<=position.column+1;j++){
 
                         if(i>=0&&i<n&&j>=0&&j<n){
+                            //未被掀开，且周围无雷加入队列
+                            if(this->map[i][j]!=2&&checkGridsAround(this->map,i,j,n))
+                                qGrid.push(positionOfGrid(i,j));
 
                             this->grids1[i][j]->setText(QString::number(this->getAroundMine(this->map,i,j,n)));
                             this->grids1[i][j]->setEnabled(false);
+                            this->map[i][j] = 2;
                         }
                     }
             }
             else{
-                for(int i=row-1;i<=row+1;i++)
-                    for(int j=column-1;j<=column+1;j++){
+                for(int i=position.row-1;i<=position.row+1;i++)
+                    for(int j=position.column-1;j<=position.column+1;j++){
 
                         if(i>=0&&i<n&&j>=0&&j<n){
+                            //未被掀开，且周围无雷加入队列
+                            if(this->map[i][j]!=2&&checkGridsAround(this->map,i,j,n))
+                                qGrid.push(positionOfGrid(i,j));
 
                             this->grids2[i][j]->setText(QString::number(this->getAroundMine(this->map,i,j,n)));
                             this->grids2[i][j]->setEnabled(false);
+                            this->map[i][j] = 2;
                         }
                     }
+            }
+
+            qGrid.pop();
             }
 
         }
