@@ -114,6 +114,7 @@ void MainWindow::startCount(){
     if(workingCount == false){
         timer_up->start(1000);
         workingCount = true;
+        ui->pushButtton_start->setText("暂停");
     }
 }
 
@@ -122,6 +123,7 @@ void MainWindow::stopCount(){
     if(workingCount ==true){
         timer_up->stop();
         workingCount = false;
+        ui->pushButtton_start->setText("开始");
     }
 }
 
@@ -146,12 +148,10 @@ void MainWindow::on_pushButtton_start_clicked()
     if(workingCount ==false){
         startCount();
         workingCount = true;
-        ui->pushButtton_start->setText("暂停");
     }
     else{
         stopCount();
         workingCount = false;
-         ui->pushButtton_start->setText("开始");
 
     }
 }
@@ -266,6 +266,8 @@ void MainWindow::on_intermediate_triggered()
 
 
 void MainWindow::sweeperGrids(){
+    //若是第一次点击则开始计数器
+    this->startCount();
 
     QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
     int row, column, rowSpan, columnSpan;
@@ -293,13 +295,23 @@ void MainWindow::sweeperGrids(){
 //        int c = numbers[1];
 
         if(this->map[row][column] == 1){
+             //暂停计数器
+             this->stopCount();
+
              QIcon icon(":/image/bomb.png");
             senderButton->setIcon(icon);
-            QMessageBox::StandardButton sbutton;
-            sbutton = QMessageBox::question(this,"西奈","小心手雷  w(ﾟДﾟ)w",
-                                           QMessageBox::Yes | QMessageBox::No);
-            senderButton->setEnabled(false);
 
+            QMessageBox::StandardButton sbutton;
+            QMessageBox msgBox(QMessageBox::Question, "西奈", "小心手雷 w(ﾟДﾟ)w", QMessageBox::Yes | QMessageBox::No, this);
+
+            msgBox.setDefaultButton(QMessageBox::Yes);  // 将"Yes"按钮设置为默认按钮
+            msgBox.setStandardButtons(QMessageBox::Yes);  // 仅显示"Yes"按钮
+
+            sbutton = static_cast<QMessageBox::StandardButton>(msgBox.exec());
+
+            this->setMap();
+            this->resetCount();
+            return;
         }
 
         int n;
