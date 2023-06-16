@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
             //绑定槽函数
             connect(grids1[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             gridLayout1->addWidget(grids1[i][j],i,j,1,1);
+
         }
     for(int i=0;i<16;i++)
         for(int j=0;j<16;j++){
@@ -27,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
             connect(grids2[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             gridLayout2->addWidget(grids2[i][j],i,j,1,1);
         }
-
      ui->MineSweeeperWindow1->setLayout(gridLayout1);
      ui->MineSweeeperWindow2->setLayout(gridLayout2);
      ui->MineSweeeperWindow1->hide();
@@ -182,30 +182,58 @@ void MainWindow::setMap(){
     }
 
 
-
-    //初始化地图，无炸弹
+    //初始化地图，无炸弹,初始化方格
     for(int i=0;i<area;i++)
-        for(int j=0;j<area;j++)
+        for(int j=0;j<area;j++){
             map[i][j] = 0;
+
+            if(this->level == 1){
+                this->grids1[i][j]->setText("");
+                this->grids1[i][j]->setEnabled(true);
+                this->grids1[i][j]->setIcon(QIcon());
+            }
+            else{
+                this->grids2[i][j]->setText("");
+                this->grids2[i][j]->setEnabled(true);
+                this->grids2[i][j]->setIcon(QIcon());
+            }
+        }
 
 
     //随机生成炸弹
-    int minNumber = 0;    // 随机数的最小值
-    int maxNumber = (area*area)-1;  // 随机数的最大值
-    int count = numberOfMines;       // 需要生成的随机数数量
-
-    std::vector<int> numbers;
-    for (int i = minNumber; i <= maxNumber; ++i) {
-        numbers.push_back(i);
-    }
-
     std::random_device rd;
-    std::mt19937 generator(rd());
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, area - 1);
 
-    std::shuffle(numbers.begin(), numbers.end(), generator);
+    int count = numberOfMines;
+    while (count>0) {
+        int rOfMine = dis(gen);
+        int cOfMine = dis(gen);
 
-    for (int i = 0; i < count; ++i) {
-        map[numbers[i]/area][numbers[i]%area-1]=1;
+        if(map[rOfMine][cOfMine] != 1 ){
+            map[rOfMine][cOfMine] = 1;
+            count--;
+
+        }
+
+
+    }
+//    int minNumber = 0;    // 随机数的最小值
+//    int maxNumber = (area*area)-1;  // 随机数的最大值
+//    int count = numberOfMines;       // 需要生成的随机数数量
+
+//    std::vector<int> numbers;
+//    for (int i = minNumber; i <= maxNumber; ++i) {
+//        numbers.push_back(i);
+//    }
+
+//    std::random_device rd;
+//    std::mt19937 generator(rd());
+
+//    std::shuffle(numbers.begin(), numbers.end(), generator);
+
+//    for (int i = 0; i < count; ++i) {
+//        map[numbers[i]/area][numbers[i]%area-1]=1;
 //        if(count == 10){
 //            int row = numbers[i]/area;
 //            int colum = numbers[i]%area-1;
@@ -221,7 +249,6 @@ void MainWindow::setMap(){
     }
 
 
-}
 
 
 void MainWindow::on_primary_triggered()
@@ -339,3 +366,8 @@ void MainWindow::sweeperGrids(){
 }
 
 
+
+void MainWindow::on_restart_triggered()
+{
+    this->setMap();
+}

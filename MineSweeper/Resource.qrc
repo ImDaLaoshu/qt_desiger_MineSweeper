@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/image">
         <file>bomb.png</file>
+        <file>1.png</file>
     </qresource>
 </RCC>

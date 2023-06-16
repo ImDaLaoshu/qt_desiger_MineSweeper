@@ -74,6 +74,8 @@ private slots:
 
     void sweeperGrids();
 
+    void on_restart_triggered();
+
 private:
     Ui::MainWindow *ui;
     //计时器时间
