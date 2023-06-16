@@ -215,9 +215,17 @@ void MainWindow::setMap(){
             count--;
 
         }
-
-
     }
+
+//    //输出地图
+//    for(int i=0;i<area;i++){
+//        for(int j=0;j<area;j++){
+//            std::cout<<this->map[i][j]<<" ";
+//        }
+//        std::cout<<std::endl;
+//    }
+
+
 //    int minNumber = 0;    // 随机数的最小值
 //    int maxNumber = (area*area)-1;  // 随机数的最大值
 //    int count = numberOfMines;       // 需要生成的随机数数量
@@ -294,6 +302,8 @@ void MainWindow::sweeperGrids(){
 //        int r = numbers[0];
 //        int c = numbers[1];
 
+
+        //翻到地雷
         if(this->map[row][column] == 1){
              //暂停计数器
              this->stopCount();
@@ -301,13 +311,13 @@ void MainWindow::sweeperGrids(){
              QIcon icon(":/image/bomb.png");
             senderButton->setIcon(icon);
 
-            QMessageBox::StandardButton sbutton;
-            QMessageBox msgBox(QMessageBox::Question, "西奈", "小心手雷 w(ﾟДﾟ)w", QMessageBox::Yes | QMessageBox::No, this);
+            // 游戏失败，弹窗
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("西奈");
+            msgBox.setText("action failed");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.exec();
 
-            msgBox.setDefaultButton(QMessageBox::Yes);  // 将"Yes"按钮设置为默认按钮
-            msgBox.setStandardButtons(QMessageBox::Yes);  // 仅显示"Yes"按钮
-
-            sbutton = static_cast<QMessageBox::StandardButton>(msgBox.exec());
 
             this->setMap();
             this->resetCount();
@@ -321,7 +331,7 @@ void MainWindow::sweeperGrids(){
             n=16;
 
 
-
+        //方格周围无地雷
         if(this->map[row][column] == 0&&checkGridsAround(this->map,row,column,n)){
 
             std::queue<positionOfGrid> qGrid;
@@ -369,11 +379,49 @@ void MainWindow::sweeperGrids(){
 
                senderButton->setText(QString::number(this->getAroundMine(this->map,row,column,n)));
                senderButton->setEnabled(false);
+               this->map[row][column] = 2;
         }
 
 
-        std::cout<<row<<","<<column<<std::endl;
+//        std::cout<<row<<","<<column<<std::endl;
 
+
+        //判断是否胜利
+        bool actionSuccess = true;
+
+        for (int i=0;i<n;i++){
+            for (int j=0;j<n;j++){
+                if(this->map[i][j]==0){
+                    actionSuccess = false;
+                    break;
+                }
+            }
+            if(actionSuccess == false)
+                break;
+        }
+
+        if(actionSuccess){
+            //暂停计数器
+            this->stopCount();
+            //游戏胜利弹窗
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("西奈");
+            msgBox.setText("action success!");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.exec();
+            this->setMap();
+            this->resetCount();
+            return;
+        }
+
+        //输出地图
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                std::cout<<this->map[i][j]<<" ";
+            }
+            std::cout<<std::endl;
+        }
+        std::cout<<"----------------------------"<<std::endl;
 
 }
 
