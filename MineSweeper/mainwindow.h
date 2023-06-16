@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QGridLayout>
@@ -63,11 +64,6 @@ public:
 
 private slots:
     void on_exit_triggered();
-
-
-    void on_pushButtton_start_clicked();
-
-    void on_pushButton_reset_clicked();
 
     void on_primary_triggered();
 

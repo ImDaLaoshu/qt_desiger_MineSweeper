@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
             connect(grids1[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             grids1[i][j]->setContextMenuPolicy(Qt::CustomContextMenu);//启用自定义上下文菜单
             connect(grids1[i][j], &QPushButton::customContextMenuRequested, this, &MainWindow::markMine);//右键
+            //宽高自适应并保持不变
+            grids1[i][j]->setFixedSize(88,88);
+            grids1[i][j]->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
             gridLayout1->addWidget(grids1[i][j],i,j,1,1);
 
@@ -31,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent)
             connect(grids2[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             grids2[i][j]->setContextMenuPolicy(Qt::CustomContextMenu);//启用自定义上下文菜单
             connect(grids2[i][j], &QPushButton::customContextMenuRequested, this, &MainWindow::markMine);//右键
+            //宽高自适应并保持不变
+            grids2[i][j]->setFixedSize(50,50);
+            grids2[i][j]->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
             gridLayout2->addWidget(grids2[i][j],i,j,1,1);
         }
@@ -120,7 +126,6 @@ void MainWindow::startCount(){
     if(workingCount == false){
         timer_up->start(1000);
         workingCount = true;
-        ui->pushButtton_start->setText("暂停");
     }
 }
 
@@ -129,7 +134,6 @@ void MainWindow::stopCount(){
     if(workingCount ==true){
         timer_up->stop();
         workingCount = false;
-        ui->pushButtton_start->setText("开始");
     }
 }
 
@@ -146,27 +150,6 @@ void MainWindow::resetCount(){
 
 }
 
-
-
-//开始(暂停)，重置计数器
-void MainWindow::on_pushButtton_start_clicked()
-{
-    if(workingCount ==false){
-        startCount();
-        workingCount = true;
-    }
-    else{
-        stopCount();
-        workingCount = false;
-
-    }
-}
-
-void MainWindow::on_pushButton_reset_clicked()
-{
-    resetCount();
-    ui->pushButtton_start->setText("开始");
-}
 
 
 //绘制地图,无炸弹:0,有炸弹:1
@@ -269,6 +252,7 @@ void MainWindow::on_primary_triggered()
 {
     this->setLevel(1);
     this->setMap();
+    this->resetCount();
 
 }
 
@@ -276,6 +260,7 @@ void MainWindow::on_intermediate_triggered()
 {
     this->setLevel(2);
     this->setMap();
+    this->resetCount();
 }
 
 
@@ -320,7 +305,7 @@ void MainWindow::sweeperGrids(){
             // 游戏失败，弹窗
             QMessageBox msgBox;
             msgBox.setWindowTitle("西奈");
-            msgBox.setText("action failed");
+            msgBox.setText("action failed!😭");
             msgBox.setStandardButtons(QMessageBox::Ok);
             msgBox.exec();
 
@@ -411,8 +396,8 @@ void MainWindow::sweeperGrids(){
             this->stopCount();
             //游戏胜利弹窗
             QMessageBox msgBox;
-            msgBox.setWindowTitle("西奈");
-            msgBox.setText("action success!");
+            msgBox.setWindowTitle("😀");
+            msgBox.setText("action success!😀");
             msgBox.setStandardButtons(QMessageBox::Ok);
             msgBox.exec();
             this->setMap();
@@ -436,6 +421,7 @@ void MainWindow::sweeperGrids(){
 void MainWindow::on_restart_triggered()
 {
     this->setMap();
+    this->resetCount();
 }
 
 //右键标记地雷
