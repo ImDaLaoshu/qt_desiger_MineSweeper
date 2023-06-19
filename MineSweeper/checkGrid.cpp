@@ -2,40 +2,11 @@
 
 bool MainWindow::checkGridsAround(int map[16][16],int r,int c,int n){
 
-    if(r-1>=0&&c-1>=0)
-        if(map[r-1][c-1]==1)
-            return false;
-
-    if(r-1>0)
-        if(map[r-1][c]==1)
-            return false;
-
-    if(r-1>=0&&c+1<n)
-        if(map[r-1][c+1]==1)
-            return false;
-
-    if(c-1>=0)
-        if(map[r][c-1]==1)
-            return false;
-
-    if(c+1<n)
-        if(map[r][c+1]==1)
-            return false;
-
-    if(r+1<n&&c-1>=0)
-        if(map[r+1][c-1]==1)
-            return false;
-
-    if(r+1<n)
-        if(map[r+1][c]==1)
-            return false;
-
-
-    if(r+1<n&&c+1<n)
-        if(map[r+1][c+1]==1)
-            return false;
-
-
+    for (int i=r-1;i<=r+1;i++)
+        for(int j=c-1;j<=c+1;j++)
+            if(i>=0&&i<n&&j>=0&&j<n)
+                if(map[i][j] == 1)
+                    return false;
 
     return true;
 
@@ -47,37 +18,10 @@ int MainWindow::getAroundMine(int map[16][16],int r,int c,int n){
 
     int number=0;
 
-    if(r-1>=0&&c-1>=0)
-        if(map[r-1][c-1]==1)
-            number+=1;
-
-    if(r-1>0)
-        if(map[r-1][c]==1)
-            number+=1;
-
-    if(r-1>=0&&c+1<n)
-        if(map[r-1][c+1]==1)
-            number+=1;
-
-    if(c-1>=0)
-        if(map[r][c-1]==1)
-            number+=1;
-    if(c+1<n)
-        if(map[r][c+1]==1)
-            number+=1;
-
-    if(r+1<n&&c-1>=0)
-        if(map[r+1][c-1]==1)
-            number+=1;
-
-    if(r+1<n)
-        if(map[r+1][c]==1)
-            number+=1;
-
-
-    if(r+1<n&&c+1<n)
-        if(map[r+1][c+1]==1)
-            number+=1;
-
+    for (int i=r-1;i<=r+1;i++)
+        for(int j=c-1;j<=c+1;j++)
+            if(i>=0&&i<n&&j>=0&&j<n)
+                if(map[i][j] == 1)
+                    number++;
     return number;
 }
