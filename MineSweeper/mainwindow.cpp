@@ -12,8 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     for(int i=0;i<9;i++)
         for(int j=0;j<9;j++){
             grids1[i][j]=new QPushButton("");
-//            QString result=QString::number(i)+","+QString::number(j);
-//            grids1[i][j]->setText(result);
             //绑定槽函数
             connect(grids1[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             grids1[i][j]->setContextMenuPolicy(Qt::CustomContextMenu);//启用自定义上下文菜单
@@ -28,8 +26,6 @@ MainWindow::MainWindow(QWidget *parent)
     for(int i=0;i<16;i++)
         for(int j=0;j<16;j++){
             grids2[i][j]=new QPushButton("");
-//            QString result=QString::number(i)+","+QString::number(j);
-//            grids2[i][j]->setText(result);
             //绑定槽函数
             connect(grids2[i][j], &QPushButton::clicked, this, &MainWindow::sweeperGrids);
             grids2[i][j]->setContextMenuPolicy(Qt::CustomContextMenu);//启用自定义上下文菜单
@@ -205,43 +201,6 @@ void MainWindow::setMap(){
         }
     }
 
-//    //输出地图
-//    for(int i=0;i<area;i++){
-//        for(int j=0;j<area;j++){
-//            std::cout<<this->map[i][j]<<" ";
-//        }
-//        std::cout<<std::endl;
-//    }
-
-
-//    int minNumber = 0;    // 随机数的最小值
-//    int maxNumber = (area*area)-1;  // 随机数的最大值
-//    int count = numberOfMines;       // 需要生成的随机数数量
-
-//    std::vector<int> numbers;
-//    for (int i = minNumber; i <= maxNumber; ++i) {
-//        numbers.push_back(i);
-//    }
-
-//    std::random_device rd;
-//    std::mt19937 generator(rd());
-
-//    std::shuffle(numbers.begin(), numbers.end(), generator);
-
-//    for (int i = 0; i < count; ++i) {
-//        map[numbers[i]/area][numbers[i]%area-1]=1;
-//        if(count == 10){
-//            int row = numbers[i]/area;
-//            int colum = numbers[i]%area-1;
-
-//            grids1[row][colum]->setText("1");
-//        }
-//        else{
-//            int row = numbers[i]/area;
-//            int colum = numbers[i]%area-1;
-
-//            grids2[row][colum]->setText("1");
-//        }
     }
 
 
@@ -275,22 +234,6 @@ void MainWindow::sweeperGrids(){
     else
         gridLayout2->getItemPosition(gridLayout2->indexOf(senderButton),&row, &column, &rowSpan, &columnSpan);
 
-//    //分割字符串，获取网格坐标
-//    QString str = senderButton->text();
-//    std::string stdStr = str.toStdString();
-
-//    std::stringstream ss(stdStr);
-//    std::vector<int> numbers;
-
-//    std::string segment;
-//    while (std::getline(ss, segment, ',')) {
-//        int number;
-//        std::istringstream(segment) >> number;
-//        numbers.push_back(number);
-//    }
-
-//        int r = numbers[0];
-//        int c = numbers[1];
 
 
         //翻到地雷
