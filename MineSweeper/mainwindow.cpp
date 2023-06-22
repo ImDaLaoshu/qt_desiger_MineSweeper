@@ -148,6 +148,7 @@ void MainWindow::resetCount(){
 
 
 
+
 //绘制地图,无炸弹:0,有炸弹:1
 void MainWindow::setMap(){
 
@@ -189,6 +190,7 @@ void MainWindow::setMap(){
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, area - 1);
 
+
     int count = numberOfMines;
     while (count>0) {
         int rOfMine = dis(gen);
@@ -200,6 +202,9 @@ void MainWindow::setMap(){
 
         }
     }
+
+    // 刷新种子
+    gen.seed(rd());
 
     }
 
@@ -267,45 +272,64 @@ void MainWindow::sweeperGrids(){
         //方格周围无地雷
         if(this->map[row][column] == 0&&checkGridsAround(this->map,row,column,n)){
 
-            std::queue<positionOfGrid> qGrid;
-            qGrid.push(positionOfGrid(row,column));
+            //队列实现
+//            std::queue<positionOfGrid> qGrid;
+//            qGrid.push(positionOfGrid(row,column));
 
-            while(!qGrid.empty()){
+//            while(!qGrid.empty()){
 
-            positionOfGrid position = qGrid.front();
-            if(this->level == 1){
-                for(int i=position.row-1;i<=position.row+1;i++)
-                    for(int j=position.column-1;j<=position.column+1;j++){
+//            positionOfGrid position = qGrid.front();
+//            if(this->level == 1){
+//                for(int i=position.row-1;i<=position.row+1;i++)
+//                    for(int j=position.column-1;j<=position.column+1;j++){
 
-                        if(i>=0&&i<n&&j>=0&&j<n){
-                            //未被掀开，且周围无雷加入队列
-                            if(this->map[i][j]!=2&&checkGridsAround(this->map,i,j,n))
-                                qGrid.push(positionOfGrid(i,j));
+//                        if(i>=0&&i<n&&j>=0&&j<n){
+//                            //未被掀开，且周围无雷加入队列
+//                            if(this->map[i][j]!=2&&checkGridsAround(this->map,i,j,n))
+//                                qGrid.push(positionOfGrid(i,j));
 
-                            this->grids1[i][j]->setText(QString::number(this->getAroundMine(this->map,i,j,n)));
-                            this->grids1[i][j]->setEnabled(false);
-                            this->map[i][j] = 2;
+//                            this->grids1[i][j]->setText(QString::number(this->getAroundMine(this->map,i,j,n)));
+//                            this->grids1[i][j]->setEnabled(false);
+//                            this->map[i][j] = 2;
+//                        }
+//                    }
+//            }
+//            else{
+//                for(int i=position.row-1;i<=position.row+1;i++)
+//                    for(int j=position.column-1;j<=position.column+1;j++){
+
+//                        if(i>=0&&i<n&&j>=0&&j<n){
+//                            //未被掀开，且周围无雷加入队列
+//                            if(this->map[i][j]!=2&&checkGridsAround(this->map,i,j,n))
+//                                qGrid.push(positionOfGrid(i,j));
+
+//                            this->grids2[i][j]->setText(QString::number(this->getAroundMine(this->map,i,j,n)));
+//                            this->grids2[i][j]->setEnabled(false);
+//                            this->map[i][j] = 2;
+//                        }
+//                    }
+//            }
+
+//            qGrid.pop();
+//            }
+
+
+            //递归实现
+            openGridsAround(map,row,column,n);
+            for(int i=0;i<n;i++)
+                for(int j=0;j<n;j++)
+                    if(map[i][j] == 2){
+                        if(this->level ==1){
+                        this->grids1[i][j]->setText(QString::number(this->getAroundMine(this->map,i,j,n)));
+                        this->grids1[i][j]->setEnabled(false);
                         }
-                    }
-            }
-            else{
-                for(int i=position.row-1;i<=position.row+1;i++)
-                    for(int j=position.column-1;j<=position.column+1;j++){
-
-                        if(i>=0&&i<n&&j>=0&&j<n){
-                            //未被掀开，且周围无雷加入队列
-                            if(this->map[i][j]!=2&&checkGridsAround(this->map,i,j,n))
-                                qGrid.push(positionOfGrid(i,j));
-
+                        else{
                             this->grids2[i][j]->setText(QString::number(this->getAroundMine(this->map,i,j,n)));
                             this->grids2[i][j]->setEnabled(false);
-                            this->map[i][j] = 2;
                         }
-                    }
-            }
 
-            qGrid.pop();
-            }
+                    }
+
 
         }
         else{
